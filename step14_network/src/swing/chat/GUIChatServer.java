@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -120,6 +121,19 @@ class ChatHandle extends Thread{
 			//테스트3-------------------------------------------------
 			broadcast("[" + nickname + "]님이 입장하셨습니다\n");
 			//테스트3-------------------------------------------------
+			
+			//테스트4(대화시작)--------------------------------------
+			while(true)
+			{
+				try{
+					String text=br.readLine();
+					server.setMsg(nickname + " : " + text + "\n");   //서버에 출력
+					broadcast(nickname + " : " + text + "\n");         //클라이언트들에게 전송
+				}catch(SocketException e){
+					return;
+				}
+			}
+			//테스트4(대화시작)--------------------------------------
 		}catch(IOException e){
 			e.printStackTrace();
 		}		
