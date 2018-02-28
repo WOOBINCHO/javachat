@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -139,6 +141,22 @@ public class GUIChatClient extends JFrame implements ActionListener, Runnable{
 			pw.println(nickname);                 //주의)pw.print();   -----X
 			pw.flush();			
 			//테스트2(송신)---------------------------------------
+			//테스트3(수신)---------------------------------------
+			InputStream is=sock.getInputStream();
+			br=new BufferedReader(new InputStreamReader(is));
+			
+			String str;
+			while(true)
+			{
+				try{
+					str=br.readLine();
+					txt_list.append(str + "\n");
+				}catch(IOException e){
+					txt_list.append("서버가 종료 됨");
+					return;
+				}
+			}
+			//테스트3(수신)---------------------------------------
 		}catch(IOException e){
 			e.printStackTrace();
 		}		
