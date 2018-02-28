@@ -117,13 +117,26 @@ class ChatHandle extends Thread{
 		try{
 			nickname=br.readLine();
 			server.setMsg("[" + nickname + "]님이 입장 하셨습니다\n");  //setMsg()메서드 생성할것
-			
+			//테스트3-------------------------------------------------
+			broadcast("[" + nickname + "]님이 입장하셨습니다\n");
+			//테스트3-------------------------------------------------
 		}catch(IOException e){
 			e.printStackTrace();
-		}
-		
+		}		
 		//테스트2---------------------------------------------------
 	}
+	
+	/* 모든 접속자에게도 메세지를 보내줌*/
+	public void broadcast(String string)
+	{
+		int s=server.inwon.size();   //접속자 객체수
+		for(int i=0; i<s; i++)
+		{
+			ChatHandle ch=(ChatHandle)server.inwon.elementAt(i);
+			ch.pw.println(string);
+			ch.pw.flush();
+		}
+	}	
 }
 
 
